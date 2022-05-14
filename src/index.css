@@ -27,3 +27,7 @@
 .appear {
   animation: appear 0.25s linear 0s 1;
 }
+
+.heightMinusHeader {
+  height: calc(100% - 53px)
+}

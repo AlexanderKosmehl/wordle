@@ -14,7 +14,7 @@ export default function InfinityConfigBar({
   newHandler,
 }: Props) {
   return (
-    <div className="flex flex-row justify-center mt-4">
+    <div className="flex flex-row justify-center p-4">
       <div className="flex flex-row justify-center items-center">
         <label
           className="text-white font-semibold mr-2 select-none"

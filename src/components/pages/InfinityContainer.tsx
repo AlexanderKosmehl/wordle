@@ -14,7 +14,7 @@ export default function InfinityContainer({}: Props) {
   return (
     <>
       {selectedWord && wordList ? (
-        <>
+        <div className="h-full heightMinusHeader flex flex-col justify-around">
           <InfinityConfigBar
             wordLength={wordLength}
             setWordLength={setWordLength}
@@ -25,7 +25,7 @@ export default function InfinityContainer({}: Props) {
             isVisible={modalIsVisible}
             setIsVisible={setModalIsVisible}
           />
-        </>
+        </div>
       ) : (
         <h2 className="text-center mx-auto text-white text-xl p-8">
           Loading...
