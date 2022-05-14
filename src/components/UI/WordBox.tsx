@@ -26,14 +26,14 @@ export default function WordBox({ selectedWord, wordList }: Props) {
    */
   function checkWord() {
     // Valid Word
-    if (
-      !wordList.some(
-        (word) => word.toLowerCase() === guessList[currentLine].toLowerCase()
-      )
-    ) {
-      addToast('Unbekanntes Wort', 2000)
-      return
-    }
+    // if (
+    //   !wordList.some(
+    //     (word) => word.toLowerCase() === guessList[currentLine].toLowerCase()
+    //   )
+    // ) {
+    //   addToast('Unbekanntes Wort', 2000)
+    //   return
+    // }
 
     // Prepare next line
     setCurrentLine((currentLine) => currentLine + 1)

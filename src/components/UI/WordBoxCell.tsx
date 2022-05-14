@@ -19,7 +19,7 @@ export default function WordBoxCell({
   if (shouldShowResult) {
     if (selectedWord[index] === guessedLetter) {
       bgColor = 'bg-correct'
-    } else if (selectedWord.includes(guessedLetter)) {
+    } else if (guessedLetter && selectedWord.includes(guessedLetter)) {
       bgColor = 'bg-present'
     } else {
       bgColor = 'bg-absent'
