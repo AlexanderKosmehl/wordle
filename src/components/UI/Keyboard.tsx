@@ -15,7 +15,7 @@ export default function Keyboard({
   guesses,
 }: Props) {
   return (
-    <div className="flex justify-center mt-8 font-mono font-bold min-w-0 px-2">
+    <div className="flex justify-center font-mono font-bold min-w-0 px-2">
       <div className="h-[190px] max-w-md space-y-1 text-2xl min-w-0">
         <div className="flex flex-row space-x-1 justify-center min-w-0">
           <KeyboardButton

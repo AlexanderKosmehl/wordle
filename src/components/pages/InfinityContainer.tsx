@@ -14,7 +14,7 @@ export default function InfinityContainer({}: Props) {
   return (
     <>
       {selectedWord && wordList ? (
-        <div className="h-full heightMinusHeader flex flex-col justify-around">
+        <div className="heightMinusHeader">
           <InfinityConfigBar
             wordLength={wordLength}
             setWordLength={setWordLength}
