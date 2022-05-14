@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react'
-import { ToastContext } from '../App'
 import WordBoxRow from './WordBoxRow'
+import { ToastContext } from './WordleContainer'
 
 const intendedRows = [
   { length: 4, rows: 5 },
@@ -10,7 +10,7 @@ const intendedRows = [
 ]
 
 function getRowsForLength(length: number) {
-  return intendedRows.find(entry => entry.length === length)?.rows || 0
+  return intendedRows.find((entry) => entry.length === length)?.rows || 0
 }
 
 interface Props {
