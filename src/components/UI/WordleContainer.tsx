@@ -1,4 +1,5 @@
 import { ChangeEvent, createContext, useEffect, useState } from 'react'
+import { Guess } from '../../Types/Guess'
 import { useToaster } from '../../Util/useToaster'
 import Keyboard from './Keyboard'
 import ToastContainer from './ToastContainer'
@@ -24,11 +25,36 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
   )
   const [currentLine, setCurrentLine] = useState(0)
   const [completed, setCompleted] = useState(false)
+  const [guesses, setGuesses] = useState<Guess[]>([])
 
   // Clear Completion Toast on new word
   useEffect(() => {
     clearToast()
   }, [selectedWord])
+
+  function addCurrentWordToGuesses() {
+    guessList[currentLine].split('').forEach((letter, index) => {
+      const status =
+        letter === selectedWord[index]
+          ? 'correct'
+          : selectedWord.includes(letter)
+          ? 'present'
+          : 'absent'
+
+      const existingGuess = guesses.find((guess) => guess.letter === letter)
+
+      if (existingGuess) {
+        // Check if guess can be updated
+        if (existingGuess.status === 'present' && status === 'correct') {
+          existingGuess.status = 'correct'
+          return
+        }
+      }
+
+      // Guess does not exist in list
+      setGuesses((oldGuesses) => [...oldGuesses, { letter, status }])
+    })
+  }
 
   /**
    *  Helper function to check the current word
@@ -46,6 +72,9 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
 
     // Prepare next line
     setCurrentLine((currentLine) => currentLine + 1)
+
+    // Add guesses to list for keyboard highlighting
+    addCurrentWordToGuesses()
 
     // Check for solution
     if (guessList?.[currentLine] === selectedWord) {
@@ -71,7 +100,7 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
     setGuessList((oldGuessList) =>
       oldGuessList.map((oldGuess, index) => {
         if (index === currentLine && oldGuess.length < selectedWord.length) {
-          return oldGuess + letter.toUpperCase()
+          return oldGuess + (letter === 'ß' ? 'ß' : letter.toUpperCase())
         } else {
           return oldGuess
         }
@@ -136,7 +165,12 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
           currentLine={currentLine}
         />
       </ToastContext.Provider>
-      <Keyboard />
+      <Keyboard
+        inputHandler={handleInput}
+        deletionHandler={handleDeletion}
+        enterHandler={checkWord}
+        guesses={guesses}
+      />
     </>
   )
 }
