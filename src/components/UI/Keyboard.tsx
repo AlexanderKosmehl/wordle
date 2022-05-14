@@ -15,9 +15,9 @@ export default function Keyboard({
   guesses,
 }: Props) {
   return (
-    <div className="flex justify-center mt-12 font-mono font-bold ">
-      <div className="h-[190px] max-w-md space-y-1 text-2xl">
-        <div className="flex flex-row space-x-1 justify-center">
+    <div className="flex justify-center mt-12 font-mono font-bold min-w-0">
+      <div className="h-[190px] max-w-md space-y-1 text-2xl min-w-0">
+        <div className="flex flex-row space-x-1 justify-center min-w-0">
           <KeyboardButton
             onClick={() => inputHandler('Q')}
             value={'Q'}
@@ -69,7 +69,7 @@ export default function Keyboard({
             guesses={guesses}
           />
         </div>
-        <div className="flex flex-row space-x-1 justify-center">
+        <div className="flex flex-row space-x-1 justify-center min-w-0">
           <KeyboardButton
             onClick={() => inputHandler('A')}
             value={'A'}
@@ -116,7 +116,7 @@ export default function Keyboard({
             guesses={guesses}
           />
         </div>
-        <div className="flex flex-row space-x-1 justify-center">
+        <div className="flex flex-row space-x-1 justify-center min-w-0">
           <KeyboardButton
             onClick={() => inputHandler('Y')}
             value={'Y'}
@@ -153,7 +153,7 @@ export default function Keyboard({
             guesses={guesses}
           />
         </div>
-        <div className="flex justify-center space-x-1">
+        <div className="flex justify-center space-x-1 min-w-0">
           <button
             className="font-bold h-10 aspect-video rounded-md font-mono bg-gray-300"
             onClick={() => enterHandler()}

@@ -22,7 +22,7 @@ export default function KeyboardButton({ onClick, value, guesses }: Props) {
 
   return (
     <button
-      className={`h-10 aspect-square rounded-md ${bgColor}`}
+      className={`h-10 min-w-0 aspect-square rounded-md ${bgColor}`}
       onClick={onClick}
     >
       {value}
