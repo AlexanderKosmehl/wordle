@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { ToastContext } from '../App'
 import WordBoxRow from './WordBoxRow'
 
 const intendedRows = [
@@ -8,10 +9,8 @@ const intendedRows = [
   { length: 7, rows: 8 },
 ]
 
-function generateNewGuessList(wordLength: number) {
-  return Array(
-    intendedRows.find((entry) => entry.length === wordLength)?.rows
-  ).fill('')
+function getRowsForLength(length: number) {
+  return intendedRows.find(entry => entry.length === length)?.rows || 0
 }
 
 interface Props {
@@ -21,10 +20,12 @@ interface Props {
 
 export default function WordBox({ selectedWord, wordList }: Props) {
   const [guessList, setGuessList] = useState<string[]>(
-    generateNewGuessList(selectedWord.length)
+    Array(getRowsForLength(selectedWord.length)).fill('')
   )
   const [currentLine, setCurrentLine] = useState(0)
   const [completed, setCompleted] = useState(false)
+
+  const addToast = useContext(ToastContext)
 
   /**
    *  Helper function to check the current word
@@ -36,6 +37,7 @@ export default function WordBox({ selectedWord, wordList }: Props) {
         (word) => word.toLowerCase() === guessList[currentLine].toLowerCase()
       )
     ) {
+      addToast('Unbekanntes Wort', 2000)
       return
     }
 
@@ -44,17 +46,17 @@ export default function WordBox({ selectedWord, wordList }: Props) {
 
     // Check for solution
     if (guessList?.[currentLine] === selectedWord) {
-      console.log('Correct!')
       window.removeEventListener('keydown', globalKeyHandler)
       setCompleted(true)
+      addToast('Richtig!', 0)
       return
     }
 
     // Handle failure
-    if (currentLine > 5) {
-      console.log('You lose!')
+    if (currentLine > getRowsForLength(selectedWord.length)) {
       window.removeEventListener('keydown', globalKeyHandler)
       setCompleted(true)
+      addToast('Leider verloren!', 0)
     }
   }
 
@@ -117,11 +119,11 @@ export default function WordBox({ selectedWord, wordList }: Props) {
   useEffect(() => {
     setCompleted(false)
     setCurrentLine(0)
-    setGuessList(generateNewGuessList(selectedWord.length))
+    setGuessList(Array(getRowsForLength(selectedWord.length)).fill(''))
   }, [selectedWord])
 
   return (
-    <div className="flex flex-col space-y-1.5 items-center py-28">
+    <div className="flex flex-col space-y-1.5 items-center">
       {guessList.map((guess, index) => (
         <WordBoxRow
           key={index}
