@@ -30,6 +30,9 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
   // Clear Completion Toast on new word
   useEffect(() => {
     clearToast()
+    setGuesses([])
+    setCurrentLine(0)
+    setGuessList(Array(getRowsForLength(selectedWord.length)).fill(''))
   }, [selectedWord])
 
   function addCurrentWordToGuesses() {
@@ -155,7 +158,7 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
   }, [selectedWord])
 
   return (
-    <>
+    <div className="flex flex-col justify-between heightMinusHeader">
       {/* <ToastContainer toast={toast} /> */}
       <ToastContext.Provider value={addToast}>
         <WordBox
@@ -171,6 +174,6 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
         enterHandler={checkWord}
         guesses={guesses}
       />
-    </>
+    </div>
   )
 }
