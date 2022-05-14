@@ -11,7 +11,7 @@ interface Props {
 
 export default function WordBox({ selectedWord, wordList, guessList, currentLine }: Props) {
   return (
-    <div className="flex flex-col space-y-1.5 items-center">
+    <div className="flex flex-col space-y-1.5 items-center p-2">
       {guessList.map((guess, index) => (
         <WordBoxRow
           key={index}

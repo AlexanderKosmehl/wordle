@@ -156,7 +156,7 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
 
   return (
     <>
-      <ToastContainer toast={toast} />
+      {/* <ToastContainer toast={toast} /> */}
       <ToastContext.Provider value={addToast}>
         <WordBox
           selectedWord={selectedWord}

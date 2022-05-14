@@ -12,7 +12,7 @@ export default function WordBoxRow({
   shouldShowResults,
 }: Props) {
   return (
-    <div className="flex flex-row space-x-1.5">
+    <div className="flex flex-row justify-center space-x-1.5 w-full max-w-md">
       {selectedWord.split('').map((_, index) => {
         return (
           <WordBoxCell

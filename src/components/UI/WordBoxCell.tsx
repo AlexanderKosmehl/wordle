@@ -40,7 +40,7 @@ export default function WordBoxCell({
 
   return (
     <div
-      className={`w-16 h-16 flex justify-center items-center font-bold font-mono text-4xl border-2 rounded-md border-gray-700 text-white select-none ${delayedClass}`}
+      className={`max-w-16 w-1/6 h-16 flex justify-center items-center font-bold font-mono text-4xl border-2 rounded-md border-gray-700 text-white select-none ${delayedClass}`}
     >
       {guessedLetter}
     </div>
