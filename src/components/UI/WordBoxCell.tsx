@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useDelayedClasses } from '../util/useDelayedAnimation'
+import { useDelayedClasses } from '../../Util/useDelayedAnimation'
 
 interface Props {
   index: number

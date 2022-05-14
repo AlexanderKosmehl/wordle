@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { useWords } from '../../util/useWords'
-import InfinityConfigBar from '../InfinityConfigBar'
-import WordleContainer from '../WordleContainer'
+import { useWords } from '../../Util/useWords'
+import InfinityConfigBar from '../UI/InfinityConfigBar'
+import WordleContainer from '../UI/WordleContainer'
 
 interface Props {}
 

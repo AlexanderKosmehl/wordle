@@ -1,7 +1,7 @@
 import { Route, Routes } from 'react-router-dom'
-import MainLayout from './components/MainLayout'
-import Home from './components/pages/Home'
-import InfinityContainer from './components/pages/InfinityContainer'
+import MainLayout from './components/UI/MainLayout'
+import Home from './components/Pages/Home'
+import InfinityContainer from './components/Pages/InfinityContainer'
 
 export default function App() {
   return (
