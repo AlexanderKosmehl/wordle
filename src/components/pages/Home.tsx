@@ -1,4 +1,6 @@
+import { Navigate } from 'react-router-dom';
+
 interface Props {}
 export default function Home({}: Props) {
-  return <div>Home</div>
+  return <Navigate to="/infinity" />
 }
