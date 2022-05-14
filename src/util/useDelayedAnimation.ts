@@ -1,11 +1,15 @@
 import { useEffect, useState } from 'react';
 
-export function useDelayedAnimation (delay: number, animationName: string) {
-  const [delayedAnimationClass, setDelayedAnimationClass] = useState('')
+export function useDelayedClasses (delay: number, classes: string) {
+  const [delayedClass, setDelayedClass] = useState('')
 
-  function triggerAnimationWithDelay () {
-    setTimeout(() => setDelayedAnimationClass(animationName), delay)
+  function triggerDelayedEffect () {
+    setTimeout(() => setDelayedClass(classes), delay)
   }
 
-  return { delayedAnimationClass, triggerAnimationWithDelay }
+  useEffect(() => {
+    setDelayedClass('')
+  }, [classes, delay])
+
+  return { delayedClass, triggerDelayedEffect }
 }
