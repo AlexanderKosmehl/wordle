@@ -30,6 +30,7 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
     clearToast()
     setGuesses([])
     setCurrentLine(0)
+    setCompleted(false)
     setGuessList(Array(selectedWord.length + 1).fill(''))
   }, [selectedWord])
 
