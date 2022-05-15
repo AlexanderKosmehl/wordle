@@ -63,7 +63,7 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
    */
   function checkWord() {
     if (completed) return
-    
+
     // Valid Word
     // if (
     //   !wordList.some(
@@ -83,16 +83,20 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
     // Check for solution
     if (guessList?.[currentLine] === selectedWord) {
       setCompleted(true)
-      setTimeout(() => setModalIsVisible(true), selectedWord.length * 200 + 200)
       return
     }
 
     // Handle failure
     if (currentLine > selectedWord.length + 1) {
       setCompleted(true)
-      setModalIsVisible(true)
     }
   }
+
+  useEffect(() => {
+    if (!completed) return
+
+    setTimeout(() => setModalIsVisible(true), selectedWord.length * 200 + 200)
+  }, [completed])
 
   /**
    * Helper function to handle letter inputs
@@ -135,14 +139,17 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
    */
   function globalKeyHandler(e: KeyboardEvent) {
     if (e.key.match(/^[a-zA-ZäöüÄÖÜß]$/)) {
+      e.preventDefault()
       handleInput(e.key)
     }
 
     if (e.key === 'Backspace') {
+      e.preventDefault()
       handleDeletion()
     }
 
     if (e.key === 'Enter') {
+      e.preventDefault()
       checkWord()
     }
   }
