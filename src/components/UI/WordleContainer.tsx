@@ -1,17 +1,13 @@
 import { ChangeEvent, createContext, useEffect, useState } from 'react'
 import { Guess } from '../../Types/Guess'
 import { useToaster } from '../../Util/useToaster'
+import CompletionModal from './CompletionModal'
 import Keyboard from './Keyboard'
-import ToastContainer from './ToastContainer'
 import WordBox from './WordBox'
 
 export const ToastContext = createContext<
   (message: string, duration: number) => void
 >(() => {})
-
-function getRowsForLength(length: number) {
-  return length + 1
-}
 
 interface Props {
   selectedWord: string
@@ -21,18 +17,20 @@ interface Props {
 export default function WordleContainer({ selectedWord, wordList }: Props) {
   const { toast, addToast, clearToast } = useToaster()
   const [guessList, setGuessList] = useState<string[]>(
-    Array(getRowsForLength(selectedWord.length)).fill('')
+    Array(selectedWord.length + 1).fill('')
   )
   const [currentLine, setCurrentLine] = useState(0)
   const [completed, setCompleted] = useState(false)
   const [guesses, setGuesses] = useState<Guess[]>([])
+
+  const [modalIsVisible, setModalIsVisible] = useState(false)
 
   // Clear Completion Toast on new word
   useEffect(() => {
     clearToast()
     setGuesses([])
     setCurrentLine(0)
-    setGuessList(Array(getRowsForLength(selectedWord.length)).fill(''))
+    setGuessList(Array(selectedWord.length + 1).fill(''))
   }, [selectedWord])
 
   function addCurrentWordToGuesses() {
@@ -83,15 +81,15 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
     if (guessList?.[currentLine] === selectedWord) {
       window.removeEventListener('keydown', globalKeyHandler)
       setCompleted(true)
-      addToast('Richtig!', 0)
+      setTimeout(() => setModalIsVisible(true), selectedWord.length * 200 + 200)
       return
     }
 
     // Handle failure
-    if (currentLine > getRowsForLength(selectedWord.length)) {
+    if (currentLine > selectedWord.length + 1) {
       window.removeEventListener('keydown', globalKeyHandler)
       setCompleted(true)
-      addToast('Leider verloren!', 0)
+      setModalIsVisible(true)
     }
   }
 
@@ -151,12 +149,6 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
     return () => window.removeEventListener('keydown', globalKeyHandler)
   }, [currentLine, guessList, selectedWord])
 
-  useEffect(() => {
-    setCompleted(false)
-    setCurrentLine(0)
-    setGuessList(Array(getRowsForLength(selectedWord.length)).fill(''))
-  }, [selectedWord])
-
   return (
     <div className="flex flex-col justify-between heightMinusHeader">
       {/* <ToastContainer toast={toast} /> */}
@@ -173,6 +165,12 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
         deletionHandler={handleDeletion}
         enterHandler={checkWord}
         guesses={guesses}
+      />
+      <CompletionModal
+        isVisible={modalIsVisible}
+        setIsVisible={setModalIsVisible}
+        selectedWord={selectedWord}
+        guessList={guessList}
       />
     </div>
   )
