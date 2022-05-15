@@ -88,12 +88,12 @@ export default function CompletionModal({
         </p>
 
         {/* Bottom */}
-        <div className="flex items-center">
+        <div className="flex items-center justify-center">
           {/* Timer */}
-          <div className="flex flex-col items-center w-1/2 border-r border-white p-4">
+          {/* <div className="flex flex-col items-center w-1/2 border-r border-white p-4">
             <span className="font-bold text-lg">Nächstes Puzzle in:</span>
             <span className="font-bold text-2xl">{timeLeft}</span>
-          </div>
+          </div> */}
 
           {/* Share */}
           <div className="flex justify-center w-1/2">
