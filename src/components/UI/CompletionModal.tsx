@@ -28,7 +28,11 @@ export default function CompletionModal({
       const minuteLeft = 59 - minute
       const secondsLeft = 59 - seconds
 
-      setTimeLeft(`${hourLeft}:${String(minuteLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`)
+      setTimeLeft(
+        `${hourLeft}:${String(minuteLeft).padStart(2, '0')}:${String(
+          secondsLeft
+        ).padStart(2, '0')}`
+      )
     }, 1000)
 
     return () => {
@@ -53,7 +57,7 @@ export default function CompletionModal({
 
     return `Wordle++ ${attempt !== -1 ? attempt : 'X'}/${
       guessList.length
-    } \n\n${attemptColors.filter(attempt => attempt !== '').join(' \n')}`
+    } \n\n${attemptColors.filter((attempt) => attempt !== '').join(' \n')}`
   }
 
   // Prepare clipboard string
@@ -85,6 +89,9 @@ export default function CompletionModal({
           {guessList.findIndex((guess) => guess === selectedWord) > -1
             ? 'Richtig!'
             : 'Leider nicht geschafft.'}
+        </p>
+        <p className="py-8 text-xl text-center">
+          Das richtige Wort war: <b>{selectedWord}</b>
         </p>
 
         {/* Bottom */}
