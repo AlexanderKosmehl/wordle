@@ -9,7 +9,6 @@ interface Props {}
 export default function InfinityContainer({}: Props) {
   const [wordLength, setWordLength] = useState(5)
   const { selectedWord, wordList, refreshWord } = useWords(wordLength)
-  const [modalIsVisible, setModalIsVisible] = useState(false)
 
   return (
     <>
@@ -21,10 +20,6 @@ export default function InfinityContainer({}: Props) {
             newHandler={() => refreshWord()}
           />
           <WordleContainer selectedWord={selectedWord} wordList={wordList} />
-          <CompletionModal
-            isVisible={modalIsVisible}
-            setIsVisible={setModalIsVisible}
-          />
         </div>
       ) : (
         <h2 className="text-center mx-auto text-white text-xl p-8">
