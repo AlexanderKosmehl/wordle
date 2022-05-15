@@ -62,6 +62,8 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
    *  Helper function to check the current word
    */
   function checkWord() {
+    if (completed) return
+    
     // Valid Word
     // if (
     //   !wordList.some(
@@ -80,7 +82,6 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
 
     // Check for solution
     if (guessList?.[currentLine] === selectedWord) {
-      window.removeEventListener('keydown', globalKeyHandler)
       setCompleted(true)
       setTimeout(() => setModalIsVisible(true), selectedWord.length * 200 + 200)
       return
@@ -88,7 +89,6 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
 
     // Handle failure
     if (currentLine > selectedWord.length + 1) {
-      window.removeEventListener('keydown', globalKeyHandler)
       setCompleted(true)
       setModalIsVisible(true)
     }
@@ -99,6 +99,8 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
    * @param letter the new letter
    */
   function handleInput(letter: string) {
+    if (completed) return
+
     setGuessList((oldGuessList) =>
       oldGuessList.map((oldGuess, index) => {
         if (index === currentLine && oldGuess.length < selectedWord.length) {
@@ -114,6 +116,8 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
    * Helper function to handle deletion letters in the current line
    */
   function handleDeletion() {
+    if (completed) return
+
     setGuessList((oldGuessList) =>
       oldGuessList.map((oldGuess, index) => {
         if (index === currentLine && oldGuess.length > 0) {
