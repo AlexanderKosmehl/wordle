@@ -4,9 +4,16 @@ import shareIcon from '../../Assets/shareIcon.png'
 interface Props {
   isVisible: boolean
   setIsVisible: (isVisible: boolean) => void
+  selectedWord: string
+  guessList: string[]
 }
 
-export default function CompletionModal({ isVisible, setIsVisible }: Props) {
+export default function CompletionModal({
+  isVisible,
+  setIsVisible,
+  selectedWord,
+  guessList,
+}: Props) {
   const [timeLeft, setTimeLeft] = useState('')
 
   // Create timer string
@@ -21,7 +28,7 @@ export default function CompletionModal({ isVisible, setIsVisible }: Props) {
       const minuteLeft = 59 - minute
       const secondsLeft = 59 - seconds
 
-      setTimeLeft(`${hourLeft}:${minuteLeft}:${secondsLeft}`)
+      setTimeLeft(`${hourLeft}:${String(minuteLeft).padStart(2, '0')}:${String(secondsLeft).padStart(2, '0')}`)
     }, 1000)
 
     return () => {
@@ -29,9 +36,30 @@ export default function CompletionModal({ isVisible, setIsVisible }: Props) {
     }
   }, [])
 
+  function getShareString(selectedWord: string, guessList: string[]) {
+    const attempt = guessList.findIndex((guess) => guess === '')
+    const attemptColors = guessList.map((guess) => {
+      return guess
+        .split('')
+        .map((letter, index) => {
+          return letter === selectedWord.charAt(index)
+            ? '🟩'
+            : selectedWord.includes(letter)
+            ? '🟨'
+            : '⬛'
+        })
+        .join('')
+    })
+
+    return `Wordle++ ${attempt !== -1 ? attempt : 'X'}/${
+      guessList.length
+    } \n\n${attemptColors.filter(attempt => attempt !== '').join(' \n')}`
+  }
+
   // Prepare clipboard string
   function sendTextToClipboard() {
-    navigator.clipboard.writeText('JS!')
+    const shareString = getShareString(selectedWord, guessList)
+    navigator.clipboard.writeText(shareString)
   }
 
   return (
@@ -53,7 +81,11 @@ export default function CompletionModal({ isVisible, setIsVisible }: Props) {
         </div>
 
         {/* Modal Content */}
-        <p className="py-8 text-xl font-bold text-center">Richtig!</p>
+        <p className="py-8 text-xl font-bold text-center">
+          {guessList.findIndex((guess) => guess === selectedWord) > -1
+            ? 'Richtig!'
+            : 'Leider nicht geschafft.'}
+        </p>
 
         {/* Bottom */}
         <div className="flex items-center">
