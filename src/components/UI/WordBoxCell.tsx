@@ -36,8 +36,6 @@ export default function WordBoxCell({
     if (shouldShowResult) triggerDelayedEffect()
   }, [shouldShowResult])
 
-  useEffect(() => {})
-
   return (
     <div
       className={`max-w-16 w-1/6 h-16 flex justify-center items-center font-bold font-mono text-4xl border-2 rounded-md border-gray-700 text-white select-none ${delayedClass}`}
