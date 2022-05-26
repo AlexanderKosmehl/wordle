@@ -63,7 +63,12 @@ export default function CompletionModal({
   // Prepare clipboard string
   function sendTextToClipboard() {
     const shareString = getShareString(selectedWord, guessList)
-    navigator.clipboard.writeText(shareString)
+
+    if (navigator.canShare()) {
+      navigator.share({ text: shareString })
+    } else {
+      navigator.clipboard.writeText(shareString)
+    }
   }
 
   return (
