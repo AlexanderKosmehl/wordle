@@ -35,7 +35,7 @@ export default function WordleContainer({ selectedWord, wordList }: Props) {
   }, [selectedWord])
 
   function addCurrentWordToGuesses() {
-    guessList[currentLine].split('').forEach((letter, index) => {
+    guessList[currentLine]?.split('').forEach((letter, index) => {
       const status =
         letter === selectedWord[index]
           ? 'correct'
